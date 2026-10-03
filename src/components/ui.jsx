@@ -1,0 +1,2 @@
+export function Brand() { return <a className="brand" href="#top" aria-label="Pomodot home"><span className="brand-mark" aria-hidden="true"><i /><i /><i /></span><span>pomodot</span></a>; }
+export function Button({ children, href, variant = 'primary', ...props }) { const className = `button button-${variant}`; return href ? <a href={href} className={className} {...props}>{children}</a> : <button className={className} {...props}>{children}</button>; }
