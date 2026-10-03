@@ -1,0 +1,2951 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>Pomodot — Calm task manager with a built-in focus rhythm</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAF9F6;
+        color: #1C1917;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .tactile-shadow {
+      box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.05), 0 2px 6px -1px rgba(28, 25, 23, 0.03);
+    }
+    .tactile-card-hover {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tactile-card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -4px rgba(225, 90, 62, 0.08), 0 4px 12px -2px rgba(28, 25, 23, 0.04);
+    }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#FAF9F6",
+            "surface-dim": "#F4F0E8",
+            "surface-container-lowest": "#FFFFFF",
+            "surface-container-low": "#F7F5EF",
+            "surface-container": "#F1EDE4",
+            "surface-container-high": "#E8E2D7",
+            "surface-container-highest": "#DDD5C7",
+            "on-surface": "#1C1917",
+            "on-surface-variant": "#57534E",
+            "outline": "#A8A29E",
+            "outline-variant": "#E7E5E4",
+            "primary": "#E15A3E",
+            "primary-container": "#EA580C",
+            "primary-fixed": "#FFEDD5",
+            "on-primary-fixed": "#7C2D12",
+            "on-primary": "#FFFFFF",
+            "secondary": "#2D3748",
+            "tertiary": "#78716C",
+            "sage": "#10B981",
+            "sage-container": "#ECFDF5",
+            "sage-dark": "#047857",
+            "warm-amber": "#F59E0B"
+          },
+          borderRadius: {
+            DEFAULT: "0.375rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "2xl": "1.25rem",
+            "3xl": "1.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "sans": ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+            "serif": ["Newsreader", "Georgia", "serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top Announcement Bar -->
+<div class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container">
+<div class="w-full bg-[#F5F2EB]/90 border-b border-surface-container/60 px-4 py-2">
+<div class="max-w-7xl mx-auto flex items-center justify-between text-xs text-on-surface-variant font-medium">
+<div class="flex items-center gap-2 mx-auto">
+<span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-sage animate-pulse"></span>
+<span>Offline-first focus engine now live on Web, Mac, iOS &amp; Android • Start free in your browser</span>
+<span class="hidden md:inline text-tertiary">|</span>
+<a class="hidden md:inline text-primary hover:underline font-semibold" href="#interactive-timer">Try the 25-min sprint ↓</a>
+</div>
+<button aria-label="Dismiss banner" class="text-tertiary hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<!-- Navigation Header -->
+<header class="h-16">
+<div class="h-16 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+<!-- Logo & Brand -->
+<a class="flex items-center gap-3 group" href="#">
+<img alt="Pomodot Logo" class="h-9 w-9 rounded-xl object-contain shadow-sm transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/AEtjO1X1czjj07RCdakl86HLen582eC8nu7XNa9I7bVEwofS23UgsX4z_TTOP9jZY4JlO0CLnm5BMt7Z-E6MjVgN7t45ekmqcC5hA_4Sb9h7RI6enGs1iY5Y5mLKdZUTQRvg2c9oflAD9Ld4z6TIt1-OybOUbHPPo_hIwEYhqUxueciZF7q9lQsGncrkHZ5XPIHNProW21xj4uZq4pgvsINNk75kw9_LbO9rLek8krnHg07lMYFK21B9MHpgIw"/>
+<div class="flex items-center gap-2">
+<span class="font-bold text-xl tracking-tight text-on-surface font-sans">Pomodot</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[11px] font-medium tracking-wide">Calm Edition</span>
+</div>
+</a>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium text-on-surface-variant">
+<a class="text-on-surface font-semibold hover:text-primary transition-colors" href="#interactive-timer">Free Timer</a>
+<a class="hover:text-on-surface transition-colors" href="#benefits">How It Works</a>
+<a class="hover:text-on-surface transition-colors" href="#views">4 Calm Views</a>
+<a class="hover:text-on-surface transition-colors" href="#use-cases">For Everyone</a>
+<a class="hover:text-on-surface transition-colors" href="#craft">Craftsmanship</a>
+</nav>
+<!-- Right Action Cluster -->
+<div class="flex items-center gap-3 sm:gap-4">
+<a class="hidden sm:inline-flex items-center text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors px-3 py-1.5" href="#interactive-timer">
+            Sign In
+          </a>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-all active:scale-[0.98] text-sm font-semibold shadow-sm shadow-primary/20" href="#interactive-timer">
+<span>Start Free</span>
+<kbd class="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-white/25 font-mono text-[10px] leading-none text-white">Space</kbd>
+</a>
+</div>
+</div>
+</header>
+</div>
+<!-- Main Container -->
+<main class="w-full pt-28 pb-16">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 space-y-20">
+<!-- HERO SECTION -->
+<section class="pt-6 sm:pt-10 pb-8 text-center max-w-4xl mx-auto space-y-6">
+<!-- Welcoming Pill -->
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container border border-surface-container-high text-xs font-medium text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-sage"></span>
+<span>The calm task manager with a built-in focus rhythm</span>
+<span class="text-tertiary">•</span>
+<span class="text-primary font-semibold">100% Free to use</span>
+</div>
+<!-- Main Headline -->
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-on-surface tracking-tight leading-[1.15]">
+          Do your best work,<br class="hidden sm:inline"/>
+<span class="font-serif italic font-normal text-primary">one calm sprint</span> at a time.
+        </h1>
+<!-- Warm Subheadline -->
+<p class="text-lg sm:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed font-normal">
+          Pomodot combines an intuitive to-do list, visual boards, and a tactile Pomodoro timer that never loses your place — even when you are completely offline on planes, trains, or deep in flow.
+        </p>
+<!-- Universal CTAs -->
+<div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-primary text-on-primary font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary-container transition-all active:scale-[0.98]" href="#interactive-timer">
+<span class="material-symbols-outlined text-[22px]">play_circle</span>
+<span>Start Focusing for Free</span>
+<span class="text-xs font-normal text-white/80">(No signup required)</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container-high text-on-surface hover:bg-surface-container font-medium text-base transition-all shadow-sm" href="#download">
+<span class="material-symbols-outlined text-[20px] text-tertiary">devices</span>
+<span>Download for Mac, iOS &amp; Android</span>
+</a>
+</div>
+<!-- Reassuring Microcopy Badges -->
+<div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs sm:text-sm text-tertiary font-medium">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sage text-[18px]">verified</span>
+<span>Free forever for individuals</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sage text-[18px]">cloud_off</span>
+<span>Works 100% offline</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sage text-[18px]">sync</span>
+<span>Instant cross-device sync</span>
+</span>
+</div>
+</section>
+<!-- INTERACTIVE COCKPIT / FREE WEB POMODORO -->
+<section class="scroll-mt-24" id="interactive-timer">
+<div class="relative bg-surface-container-lowest rounded-3xl border border-surface-container-high/80 tactile-shadow p-6 sm:p-10 lg:p-12 overflow-hidden">
+<!-- Subtle warm background gradients -->
+<div class="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-sage/5 blur-3xl pointer-events-none"></div>
+<!-- Top Mode Selector & Ambient Audio Pill -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-surface-container">
+<!-- Mode Pills -->
+<div class="inline-flex p-1 bg-surface-container-low rounded-2xl border border-surface-container self-start" id="mode-selector">
+<button class="mode-tab px-5 py-2 rounded-xl bg-surface-container-lowest text-on-surface font-semibold text-sm shadow-sm transition-all flex items-center gap-2" data-duration="1500" data-mode="focus" type="button">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Focus (25m)</span>
+</button>
+<button class="mode-tab px-5 py-2 rounded-xl text-on-surface-variant hover:text-on-surface text-sm font-medium transition-all flex items-center gap-2" data-duration="300" data-mode="short-break" type="button">
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+<span>Short Break (5m)</span>
+</button>
+<button class="mode-tab px-5 py-2 rounded-xl text-on-surface-variant hover:text-on-surface text-sm font-medium transition-all flex items-center gap-2" data-duration="900" data-mode="long-break" type="button">
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+<span>Long Break (15m)</span>
+</button>
+</div>
+<!-- Right Controls: Ambient sound & Offline status -->
+<div class="flex items-center gap-3">
+<!-- Sound Toggle -->
+<button class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-surface-container-low border border-surface-container text-xs font-medium text-on-surface hover:bg-surface-container transition-colors" id="sound-toggle" title="Toggle audio chime" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary" id="sound-icon">volume_up</span>
+<span id="sound-label">Quiet Library Ambient</span>
+</button>
+<!-- Local sync status badge -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sage-container text-sage-dark text-xs font-medium">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Ready to Focus</span>
+</div>
+</div>
+</div>
+<!-- Main Interactive Body -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6 sm:py-8">
+<!-- Left: Beautiful Circular Dial -->
+<div class="lg:col-span-6 flex flex-col items-center justify-center">
+<div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+<!-- SVG Progress Dial -->
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+<circle class="stroke-surface-container-high" cx="50" cy="50" fill="none" r="42" stroke-width="4"></circle>
+<circle class="stroke-primary transition-all duration-1000 ease-linear" cx="50" cy="50" fill="none" id="timer-ring" r="42" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round" stroke-width="4.5"></circle>
+</svg>
+<!-- Center Digital Numbers -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<div class="font-sans font-bold text-6xl sm:text-7xl text-on-surface tracking-tight tabular-nums select-none" id="timer-display">
+                    25:00
+                  </div>
+<span class="mt-2 text-xs font-semibold uppercase tracking-wider text-primary" id="session-status-label">
+                    Deep Focus Sprint
+                  </span>
+</div>
+</div>
+<!-- Friendly Session Counter Pill -->
+<div class="mt-6 flex flex-col items-center gap-2 text-center">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary" title="Session 1 completed"></span>
+<span class="w-3 h-3 rounded-full bg-primary ring-2 ring-primary ring-offset-2 ring-offset-white" title="Current session"></span>
+<span class="w-3 h-3 rounded-full bg-surface-container-high" title="Session 3"></span>
+<span class="w-3 h-3 rounded-full bg-surface-container-high" title="Session 4"></span>
+</div>
+<p class="text-xs sm:text-sm text-on-surface-variant font-medium">
+                  Session <span class="font-semibold text-on-surface" id="current-cycle-num">2</span> of 4 • Next up: 5 min coffee break ☕
+                </p>
+</div>
+</div>
+<!-- Right: Task Linkage & Action Controls -->
+<div class="lg:col-span-6 space-y-6">
+<!-- Task Card (Friendly Real-life Example) -->
+<div class="bg-surface-container-low/70 border border-surface-container rounded-2xl p-5 sm:p-6 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs uppercase font-bold tracking-wider text-tertiary">Active Task Objective</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-semibold">
+                    #Writing
+                  </span>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[22px] mt-0.5">check_circle_outline</span>
+<div class="w-full">
+<input class="w-full bg-transparent border-0 p-0 text-lg sm:text-xl font-bold text-on-surface focus:ring-0 focus:outline-none placeholder-tertiary" id="active-task-input" type="text" value="Draft product launch announcement &amp; newsletter"/>
+<p class="text-xs text-on-surface-variant mt-1">Click to edit with your own focus task anytime</p>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container flex items-center justify-between text-xs text-on-surface-variant font-medium">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-sage">checklist</span>
+<span>Subtasks: <strong>2 of 4 complete</strong></span>
+</span>
+<span>Est: <strong>2 Pomodoros (50m)</strong></span>
+</div>
+</div>
+<!-- Main Tactile Action Controls -->
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<button class="flex-1 py-4 px-6 rounded-2xl bg-primary text-on-primary font-bold text-lg flex items-center justify-center gap-2.5 shadow-lg shadow-primary/25 hover:bg-primary-container hover:shadow-xl transition-all active:scale-[0.98]" id="toggle-timer-btn" type="button">
+<span class="material-symbols-outlined text-[24px]" id="play-icon">play_arrow</span>
+<span id="play-text">Start Focus</span>
+<kbd class="ml-1 px-2 py-0.5 rounded bg-white/20 font-mono text-xs font-normal text-white">Space</kbd>
+</button>
+<button class="p-4 rounded-2xl bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors border border-surface-container" id="reset-timer-btn" title="Reset Current Sprint" type="button">
+<span class="material-symbols-outlined text-[24px]">restart_alt</span>
+</button>
+<button class="p-4 rounded-2xl bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors border border-surface-container" id="skip-timer-btn" title="Skip to Next Break" type="button">
+<span class="material-symbols-outlined text-[24px]">skip_next</span>
+</button>
+</div>
+<!-- Reassuring tip line -->
+<div class="flex items-center justify-between text-xs text-tertiary px-1 font-medium">
+<span>Press <kbd class="px-1.5 py-0.5 rounded bg-surface-container border border-surface-container-high text-on-surface font-mono">Space</kbd> to play/pause</span>
+<span class="text-sage font-semibold">✓ No signup needed to start</span>
+</div>
+</div>
+<!-- Streak & Daily Momentum Widget -->
+<div class="p-4 rounded-2xl bg-surface-container/60 border border-surface-container flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-warm-amber/15 text-warm-amber flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+</div>
+<div>
+<p class="text-xs font-semibold text-on-surface">Daily Streak: 4 Days in Flow</p>
+<p class="text-[11px] text-on-surface-variant">Today: 3 focused sprints (75 min total)</p>
+</div>
+</div>
+<span class="text-xs font-semibold text-primary">View Insights →</span>
+</div>
+</div>
+</div>
+<!-- Helpful Reassuring Footer Banner -->
+<div class="mt-6 -mx-6 -mb-6 sm:-mx-10 sm:-mb-10 lg:-mx-12 lg:-mb-12 px-6 sm:px-10 lg:px-12 py-3.5 bg-surface-container-low border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sage text-[18px]">verified_user</span>
+<span><strong>Your progress is saved privately in your browser.</strong> Close the tab anytime without losing your count.</span>
+</div>
+<a class="text-primary hover:underline font-semibold flex items-center gap-1" href="#views">
+<span>Explore Kanban &amp; To-Do views</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- TRANSLATING TECH INTO HUMAN BENEFITS -->
+<section class="space-y-10 scroll-mt-24" id="benefits">
+<div class="text-center max-w-2xl mx-auto space-y-3">
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Built For Real Life</span>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+            Technology designed to get out of your way.
+          </h2>
+<p class="text-base text-on-surface-variant leading-relaxed">
+            Most productivity apps freeze when you disconnect or demand constant logins. Pomodot was engineered with calm reliability at its core.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+<!-- Benefit 1: Offline Freedom -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow tactile-card-hover flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">flight_takeoff</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">True Offline Freedom</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                Write tasks, check off to-dos, and run focus sprints anywhere. Whether you are at 35,000 feet on an airplane, riding the subway, or in a basement coffee shop with spotty Wi-Fi, Pomodot never freezes or displays an error screen.
+              </p>
+</div>
+<div class="pt-4 border-t border-surface-container">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-sage">database</span>
+<span>Built on instant local databases (SQLite &amp; IndexedDB)</span>
+</span>
+</div>
+</div>
+<!-- Benefit 2: Magic Cross-Device Sync -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow tactile-card-hover flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-2xl bg-sage-container text-sage flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">devices_wearables</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">Magic Cross-Device Sync</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                Start a 25-minute timer on your laptop; glance at your lock screen on your phone to see 18 minutes remaining. Pause on your watch, resume on your tablet. It simply works without friction, battery drain, or missed notifications.
+              </p>
+</div>
+<div class="pt-4 border-t border-surface-container">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Smart timestamp reconciliation (Zero battery drain)</span>
+</span>
+</div>
+</div>
+<!-- Benefit 3: Zero Friction Inbox to Done -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow tactile-card-hover flex flex-col justify-between space-y-6">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-2xl bg-surface-container text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">inbox</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface">Zero Friction Inbox to Done</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                Jot down sudden thoughts in 2 seconds flat with quick capture. Organize them when you are ready into Kanban boards, clean checklists, or Today’s schedule with due dates, color tags, and subtasks.
+              </p>
+</div>
+<div class="pt-4 border-t border-surface-container">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">checklist_rtl</span>
+<span>Subtasks, Priority tags &amp; 30-Day Trash protection</span>
+</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4 VIEWS FEATURE SHOWCASE -->
+<section class="space-y-10 scroll-mt-24" id="views">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="max-w-xl space-y-2">
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Flexible Workflows</span>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+              The 4 Views You Actually Need.
+            </h2>
+<p class="text-base text-on-surface-variant">
+              Every person thinks differently. Switch effortlessly between clean lists, visual project boards, daily sprints, and calendars.
+            </p>
+</div>
+<!-- Interactive View Switcher Tabs -->
+<div class="inline-flex p-1 bg-surface-container rounded-2xl border border-surface-container-high self-start md:self-auto text-xs sm:text-sm font-medium">
+<button class="px-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface font-semibold shadow-sm" type="button">Kanban Board</button>
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors" type="button">Clean List</button>
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors" type="button">Today Focus</button>
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors" type="button">Calendar Schedule</button>
+</div>
+</div>
+<!-- Visual Board Preview Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Column 1: Today's Priorities -->
+<div class="bg-surface-container-low rounded-3xl p-5 space-y-4 border border-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">To Do Today</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-xs font-semibold text-on-surface-variant">3</span>
+</div>
+<button class="p-1 hover:bg-surface-container rounded-lg text-tertiary" title="Add item" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="space-y-3">
+<!-- Task 1 -->
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-2 hover:border-primary/40 transition-colors cursor-pointer">
+<div class="flex items-start justify-between">
+<span class="px-2 py-0.5 rounded-md bg-primary-fixed text-on-primary-fixed text-[11px] font-semibold">#Writing</span>
+<span class="text-xs text-tertiary font-medium">🍅 2 sprints</span>
+</div>
+<h4 class="font-semibold text-sm text-on-surface">Draft product launch announcement</h4>
+<div class="flex items-center justify-between text-xs text-on-surface-variant pt-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">checklist</span> 2/4 subtasks</span>
+<span class="text-tertiary">Due 3:00 PM</span>
+</div>
+</div>
+<!-- Task 2 -->
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-2 hover:border-primary/40 transition-colors cursor-pointer">
+<div class="flex items-start justify-between">
+<span class="px-2 py-0.5 rounded-md bg-sage-container text-sage-dark text-[11px] font-semibold">#Research</span>
+<span class="text-xs text-warm-amber font-bold">Important</span>
+</div>
+<h4 class="font-semibold text-sm text-on-surface">Review interview notes with 5 users</h4>
+<div class="flex items-center justify-between text-xs text-on-surface-variant pt-1">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">description</span> 3 attachments</span>
+<span class="text-tertiary">Today</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: In Flow / Active -->
+<div class="bg-surface-container-low rounded-3xl p-5 space-y-4 border-2 border-primary/20">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">In Flow Right Now</span>
+<span class="px-2 py-0.5 rounded-full bg-primary text-on-primary text-xs font-semibold">1</span>
+</div>
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+</div>
+<!-- Active Card with timer link -->
+<div class="p-5 bg-surface-container-lowest rounded-2xl border-l-4 border-primary tactile-shadow space-y-3">
+<div class="flex items-center justify-between">
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[11px] font-bold">
+                  Active Sprint (18m left)
+                </span>
+<span class="text-xs font-semibold text-primary">Sprint 2/4</span>
+</div>
+<h4 class="font-bold text-base text-on-surface">Synthesize user feedback into presentation deck</h4>
+<!-- Progress bar -->
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] text-tertiary font-medium">
+<span>Slides drafted</span>
+<span>75% complete</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-2 rounded-full w-3/4"></div>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-between text-xs text-sage font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span> Synced to iPhone &amp; Watch</span>
+<span class="text-tertiary">#Strategy</span>
+</div>
+</div>
+</div>
+<!-- Column 3: Completed / Wins -->
+<div class="bg-surface-container-low rounded-3xl p-5 space-y-4 border border-surface-container">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-bold text-sm text-on-surface">Accomplished</span>
+<span class="px-2 py-0.5 rounded-full bg-sage-container text-sage-dark text-xs font-semibold">4</span>
+</div>
+<span class="material-symbols-outlined text-sage text-[20px]">check_circle</span>
+</div>
+<div class="space-y-3">
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-1 opacity-80">
+<div class="flex items-center justify-between">
+<span class="line-through text-on-surface text-sm font-medium">Finalize quarterly budgeting spreadsheet</span>
+<span class="material-symbols-outlined text-sage text-[18px]">task_alt</span>
+</div>
+<p class="text-xs text-tertiary">Finished in 2 calm sprints (50 min)</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-1 opacity-80">
+<div class="flex items-center justify-between">
+<span class="line-through text-on-surface text-sm font-medium">Send weekly team digest email</span>
+<span class="material-symbols-outlined text-sage text-[18px]">task_alt</span>
+</div>
+<p class="text-xs text-tertiary">Finished in 1 sprint (25 min)</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- UNIVERSAL USE CASES: WHO POMODOT IS FOR -->
+<section class="space-y-10 scroll-mt-24" id="use-cases">
+<div class="text-center max-w-2xl mx-auto space-y-3">
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Made For Real People</span>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+            Loved by anyone with meaningful work to do.
+          </h2>
+<p class="text-base text-on-surface-variant">
+            Whether you’re writing a master’s thesis, shipping a new product, or planning your creative week.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+<!-- Use Case 1: Students & Researchers -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow space-y-5">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">school</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">For Students &amp; Researchers</h3>
+<p class="text-xs font-semibold text-primary mt-1">Study blocks • Reading lists • Thesis chapters</p>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+              Tackle dense reading materials and exam prep without burning out. Break multi-week research into calm, chewable 25-minute sprints with zero exam anxiety.
+            </p>
+<div class="bg-surface-container-low rounded-xl p-3 text-xs space-y-1 border border-surface-container">
+<div class="font-semibold text-on-surface">Example Task Block:</div>
+<div class="text-on-surface-variant">"Finish Chapter 4 Literature Review notes" (3 Pomodoros)</div>
+</div>
+</div>
+<!-- Use Case 2: Writers & Creators -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow space-y-5">
+<div class="w-12 h-12 rounded-2xl bg-warm-amber/15 text-warm-amber flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">edit_note</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">For Writers &amp; Creators</h3>
+<p class="text-xs font-semibold text-warm-amber mt-1">Deep writing hours • Editing sprints • Content</p>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+              Protect your creative sacred hours. Silence notifications, switch on the gentle rain audio chime, and let the words flow one uninterrupted interval at a time.
+            </p>
+<div class="bg-surface-container-low rounded-xl p-3 text-xs space-y-1 border border-surface-container">
+<div class="font-semibold text-on-surface">Example Task Block:</div>
+<div class="text-on-surface-variant">"Draft 1,200 words of Newsletter #42" (2 Pomodoros)</div>
+</div>
+</div>
+<!-- Use Case 3: Busy Professionals & Founders -->
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow space-y-5">
+<div class="w-12 h-12 rounded-2xl bg-sage-container text-sage flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">work</span>
+</div>
+<div>
+<h3 class="text-xl font-bold text-on-surface">For Professionals &amp; Teams</h3>
+<p class="text-xs font-semibold text-sage mt-1">Meeting prep • Client deliverables • Inbox zero</p>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+              Carve out high-leverage focus between calendar meetings. Organize complex deliverables into subtasks and conquer high-priority tasks before noon.
+            </p>
+<div class="bg-surface-container-low rounded-xl p-3 text-xs space-y-1 border border-surface-container">
+<div class="font-semibold text-on-surface">Example Task Block:</div>
+<div class="text-on-surface-variant">"Quarterly OKR alignment &amp; budget deck" (4 Pomodoros)</div>
+</div>
+</div>
+</div>
+</section>
+<!-- THOUGHTFUL DETAILS & CRAFTSMANSHIP -->
+<section class="space-y-10 scroll-mt-24" id="craft">
+<div class="text-center max-w-2xl mx-auto space-y-3">
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Craftsmanship In Every Pixel</span>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+            Thoughtful details you’ll appreciate every single day.
+          </h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Detail 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">delete_history</span>
+</div>
+<h4 class="font-bold text-base text-on-surface">30-Day Trash Recovery</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+              Accidentally deleted a task or subtask? Easily restore it anytime within 30 days. Your hard work is always protected.
+            </p>
+</div>
+<!-- Detail 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-sage">
+<span class="material-symbols-outlined text-[22px]">notifications_active</span>
+</div>
+<h4 class="font-bold text-base text-on-surface">Gentle Chime Library</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+              No jarring, screeching alarms. Calm acoustic singing bowls, wooden blocks, and Japanese temple bells gently mark your breaks.
+            </p>
+</div>
+<!-- Detail 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-warm-amber">
+<span class="material-symbols-outlined text-[22px]">tune</span>
+</div>
+<h4 class="font-bold text-base text-on-surface">Customizable Rhythms</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+              Prefer 50-minute deep work blocks or 90-minute ultradian cycles? Set your exact focus, short break, and long break intervals in seconds.
+            </p>
+</div>
+<!-- Detail 4 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">keyboard</span>
+</div>
+<h4 class="font-bold text-base text-on-surface">Intuitive Keyboard Control</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">
+              Press Space to toggle, 'Q' to quick-capture a new idea, and ⌘K for command search. Never leave your keyboard when in flow.
+            </p>
+</div>
+</div>
+</section>
+<!-- KEYBOARD SHORTCUTS CHEATSHEET -->
+<section class="bg-surface-container-low rounded-3xl p-8 sm:p-10 border border-surface-container flex flex-col lg:flex-row items-center justify-between gap-8">
+<div class="max-w-md space-y-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-xs font-semibold text-tertiary">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Speed &amp; Ergonomics</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface">Fingers never have to leave the keys.</h3>
+<p class="text-sm text-on-surface-variant">
+            Effortlessly control your focus timer and manage tasks at the speed of thought.
+          </p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+<span class="text-xs text-tertiary font-medium">Start / Pause</span>
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">Space</kbd>
+</div>
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+<span class="text-xs text-tertiary font-medium">Quick Capture</span>
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">Q</kbd>
+</div>
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+<span class="text-xs text-tertiary font-medium">Command Palette</span>
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">⌘ K</kbd>
+</div>
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+<span class="text-xs text-tertiary font-medium">Skip to Break</span>
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">⌘ →</kbd>
+</div>
+</div>
+</section>
+<!-- INVITING CLOSING HERO / CTA BANNER -->
+<section class="pt-6" id="download">
+<div class="bg-primary text-on-primary rounded-3xl p-8 sm:p-12 lg:p-16 text-center space-y-8 relative overflow-hidden shadow-2xl shadow-primary/20">
+<!-- Subtle decorative radial rings -->
+<div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-black/10 blur-2xl pointer-events-none"></div>
+<div class="space-y-3 max-w-2xl mx-auto relative z-10">
+<span class="text-xs font-bold uppercase tracking-widest text-white/80">Uninterrupted Momentum</span>
+<h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              Reclaim your focus today.
+            </h2>
+<p class="text-base sm:text-lg text-white/90 leading-relaxed font-normal">
+              No credit card required. Free forever for individuals. Start right now in your browser, or install the native app on your favorite devices.
+            </p>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-4 relative z-10">
+<a class="px-8 py-4 rounded-2xl bg-white text-primary font-bold text-base shadow-lg hover:bg-surface-container transition-all active:scale-[0.98]" href="#interactive-timer">
+              Launch Free In-Browser Timer
+            </a>
+<a class="px-8 py-4 rounded-2xl bg-white/15 text-white hover:bg-white/25 font-semibold text-base backdrop-blur-sm transition-all" href="#">
+              Download Native App
+            </a>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-6 text-xs text-white/75 font-medium relative z-10 pt-2">
+<span>macOS 12+ (Apple Silicon &amp; Intel)</span>
+<span>•</span>
+<span>iOS 17+ Live Activities</span>
+<span>•</span>
+<span>Android 14+</span>
+<span>•</span>
+<span>Zero Tracking or Surveillance</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- REFINED FOOTER -->
+<footer class="w-full bg-surface-container-lowest border-t border-surface-container mt-16">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+<!-- Brand Summary -->
+<div class="lg:col-span-2 space-y-4">
+<div class="flex items-center gap-3">
+<img alt="Pomodot Logo" class="h-8 w-8 rounded-xl object-contain shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1X1czjj07RCdakl86HLen582eC8nu7XNa9I7bVEwofS23UgsX4z_TTOP9jZY4JlO0CLnm5BMt7Z-E6MjVgN7t45ekmqcC5hA_4Sb9h7RI6enGs1iY5Y5mLKdZUTQRvg2c9oflAD9Ld4z6TIt1-OybOUbHPPo_hIwEYhqUxueciZF7q9lQsGncrkHZ5XPIHNProW21xj4uZq4pgvsINNk75kw9_LbO9rLek8krnHg07lMYFK21B9MHpgIw"/>
+<span class="font-bold text-xl text-on-surface font-sans">Pomodot</span>
+</div>
+<p class="text-sm text-on-surface-variant max-w-sm leading-relaxed">
+            The calm task manager with a built-in focus rhythm. Designed for writers, researchers, students, founders, and anyone who wants to do deep, meaningful work without burnout.
+          </p>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage-container text-sage-dark text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-sage animate-pulse"></span>
+<span>100% Offline-Capable • Zero Surveillance</span>
+</div>
+</div>
+<!-- Links Column 1: Platform -->
+<div class="space-y-3">
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Platform</span>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#interactive-timer">Web App (PWA)</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">macOS App</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">iOS &amp; iPadOS</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Android &amp; Tablet</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Chrome Extension</a></li>
+</ul>
+</div>
+<!-- Links Column 2: Architecture & Philosophy -->
+<div class="space-y-3">
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Philosophy</span>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Local-First Privacy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">The 25-Min Rhythm</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Manifesto</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Data Export (JSON/CSV)</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Open Standards</a></li>
+</ul>
+</div>
+<!-- Links Column 3: Views -->
+<div class="space-y-3">
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Calm Views</span>
+<ul class="space-y-2 text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#views">Visual Kanban</a></li>
+<li><a class="hover:text-primary transition-colors" href="#views">Clean List View</a></li>
+<li><a class="hover:text-primary transition-colors" href="#views">Today Focus</a></li>
+<li><a class="hover:text-primary transition-colors" href="#views">Calendar Schedule</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sound Lab</a></li>
+</ul>
+</div>
+<!-- Links Column 4: Quick Shortcuts -->
+<div class="space-y-3">
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Shortcuts</span>
+<div class="space-y-2 text-xs text-on-surface-variant font-mono">
+<div class="flex items-center justify-between">
+<span>Start/Pause</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">Space</kbd>
+</div>
+<div class="flex items-center justify-between">
+<span>Quick Task</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">Q</kbd>
+</div>
+<div class="flex items-center justify-between">
+<span>Palette</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">⌘K</kbd>
+</div>
+<div class="flex items-center justify-between">
+<span>Reset</span>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">⌥R</kbd>
+</div>
+</div>
+</div>
+</div>
+<!-- Copyright Bar -->
+<div class="pt-8 border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+<div>© 2025 Pomodot. Crafted with calm care for thinkers and builders worldwide.</div>
+<div class="flex items-center gap-6">
+<a class="hover:text-on-surface transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-on-surface transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-on-surface transition-colors" href="#">Security Whitepaper</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- SCRIPT: Interactive Web Pomodoro Engine -->
+<script>
+    (function () {
+      let timerDuration = 1500; // 25 min default
+      let timeRemaining = 1500;
+      let timerInterval = null;
+      let isRunning = false;
+      let currentMode = "focus";
+      let completedCycles = 1;
+      let soundEnabled = true;
+
+      const display = document.getElementById("timer-display");
+      const playBtn = document.getElementById("toggle-timer-btn");
+      const playIcon = document.getElementById("play-icon");
+      const playText = document.getElementById("play-text");
+      const resetBtn = document.getElementById("reset-timer-btn");
+      const skipBtn = document.getElementById("skip-timer-btn");
+      const ring = document.getElementById("timer-ring");
+      const statusLabel = document.getElementById("session-status-label");
+      const modeTabs = document.querySelectorAll(".mode-tab");
+      const soundToggle = document.getElementById("sound-toggle");
+      const soundIcon = document.getElementById("sound-icon");
+      const soundLabel = document.getElementById("sound-label");
+      const cycleNum = document.getElementById("current-cycle-num");
+
+      const totalDash = 263.89; // 2 * PI * 42
+
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+
+      function updateDisplay() {
+        display.textContent = formatTime(timeRemaining);
+        const fraction = (timerDuration - timeRemaining) / timerDuration;
+        const offset = totalDash - (fraction * totalDash);
+        ring.style.strokeDashoffset = offset;
+      }
+
+      function playGentleBell() {
+        if (!soundEnabled) return;
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          // Gentle warm singing chime (A4 + warm overtone)
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 1.2);
+        } catch (e) {
+          // Audio fallback gracefully handled
+        }
+      }
+
+      function toggleTimer() {
+        if (isRunning) {
+          pauseTimer();
+        } else {
+          startTimer();
+        }
+      }
+
+      function startTimer() {
+        if (isRunning) return;
+        isRunning = true;
+        playIcon.textContent = "pause";
+        playText.textContent = "Pause Session";
+
+        timerInterval = setInterval(() => {
+          if (timeRemaining > 0) {
+            timeRemaining--;
+            updateDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            playIcon.textContent = "play_arrow";
+            playText.textContent = "Start Focus";
+            playGentleBell();
+            handleSessionComplete();
+          }
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        if (!isRunning) return;
+        isRunning = false;
+        clearInterval(timerInterval);
+        playIcon.textContent = "play_arrow";
+        playText.textContent = "Resume Focus";
+      }
+
+      function resetTimer() {
+        pauseTimer();
+        timeRemaining = timerDuration;
+        updateDisplay();
+        playText.textContent = currentMode === "focus" ? "Start Focus" : "Start Break";
+      }
+
+      function handleSessionComplete() {
+        if (currentMode === "focus") {
+          completedCycles = (completedCycles % 4) + 1;
+          cycleNum.textContent = completedCycles;
+          if (completedCycles === 1) {
+            switchMode("long-break", 900);
+          } else {
+            switchMode("short-break", 300);
+          }
+        } else {
+          switchMode("focus", 1500);
+        }
+      }
+
+      function switchMode(mode, duration) {
+        pauseTimer();
+        currentMode = mode;
+        timerDuration = duration;
+        timeRemaining = duration;
+
+        modeTabs.forEach(tab => {
+          const tabDot = tab.querySelector("span:first-child");
+          if (tab.dataset.mode === mode) {
+            tab.classList.add("bg-surface-container-lowest", "text-on-surface", "font-semibold", "shadow-sm");
+            tab.classList.remove("text-on-surface-variant");
+            if (tabDot) {
+              tabDot.classList.remove("bg-surface-container-highest");
+              tabDot.classList.add(mode === "focus" ? "bg-primary" : "bg-sage");
+            }
+          } else {
+            tab.classList.remove("bg-surface-container-lowest", "text-on-surface", "font-semibold", "shadow-sm");
+            tab.classList.add("text-on-surface-variant");
+            if (tabDot) {
+              tabDot.classList.remove("bg-primary", "bg-sage");
+              tabDot.classList.add("bg-surface-container-highest");
+            }
+          }
+        });
+
+        if (mode === "focus") {
+          ring.classList.add("stroke-primary");
+          ring.classList.remove("stroke-sage");
+          statusLabel.textContent = "Deep Focus Sprint";
+          statusLabel.classList.add("text-primary");
+          statusLabel.classList.remove("text-sage");
+          playText.textContent = "Start Focus";
+        } else {
+          ring.classList.remove("stroke-primary");
+          ring.classList.add("stroke-sage");
+          statusLabel.textContent = mode === "short-break" ? "Rest & Hydrate (5m)" : "Extended Rest & Walk (15m)";
+          statusLabel.classList.remove("text-primary");
+          statusLabel.classList.add("text-sage");
+          playText.textContent = "Start Break";
+        }
+
+        updateDisplay();
+      }
+
+      // Mode Tab Bindings
+      modeTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          const mode = tab.dataset.mode;
+          const dur = parseInt(tab.dataset.duration, 10);
+          switchMode(mode, dur);
+        });
+      });
+
+      playBtn.addEventListener("click", toggleTimer);
+      resetBtn.addEventListener("click", resetTimer);
+      skipBtn.addEventListener("click", handleSessionComplete);
+
+      // Sound Toggle
+      soundToggle.addEventListener("click", () => {
+        soundEnabled = !soundEnabled;
+        soundIcon.textContent = soundEnabled ? "volume_up" : "volume_off";
+        soundLabel.textContent = soundEnabled ? "Quiet Library Ambient" : "Sounds Muted";
+      });
+
+      // Keyboard space shortcut listener
+      window.addEventListener("keydown", (e) => {
+        if (e.code === "Space" && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+          e.preventDefault();
+          toggleTimer();
+        }
+        if (e.altKey && (e.key === "r" || e.key === "R")) {
+          e.preventDefault();
+          resetTimer();
+        }
+      });
+
+      // Initial run
+      updateDisplay();
+    })();
+  </script>
+</body></html><!DOCTYPE html>
+
+
+
+<html lang="en"><head>
+
+<meta charset="utf-8"/>
+
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<meta content="web_standard" name="shell-type"/>
+
+<title>Pomodot — Calm task manager with a built-in focus rhythm</title>
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400;1,6..72,500&amp;display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+<style>
+
+    @layer base {
+
+      html, body {
+
+        margin: 0;
+
+        padding: 0;
+
+        background-color: #FAF9F6;
+
+        color: #1C1917;
+
+      }
+
+      body {
+
+        overscroll-behavior: none;
+
+      }
+
+    }
+
+    ::-webkit-scrollbar {
+
+      display: none;
+
+    }
+
+    .tactile-shadow {
+
+      box-shadow: 0 4px 20px -2px rgba(28, 25, 23, 0.05), 0 2px 6px -1px rgba(28, 25, 23, 0.03);
+
+    }
+
+    .tactile-card-hover {
+
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+    }
+
+    .tactile-card-hover:hover {
+
+      transform: translateY(-2px);
+
+      box-shadow: 0 12px 30px -4px rgba(225, 90, 62, 0.08), 0 4px 12px -2px rgba(28, 25, 23, 0.04);
+
+    }
+
+  </style>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<script id="tailwind-config">
+
+    tailwind.config = {
+
+      darkMode: "class",
+
+      theme: {
+
+        extend: {
+
+          colors: {
+
+            "surface": "#FAF9F6",
+
+            "surface-dim": "#F4F0E8",
+
+            "surface-container-lowest": "#FFFFFF",
+
+            "surface-container-low": "#F7F5EF",
+
+            "surface-container": "#F1EDE4",
+
+            "surface-container-high": "#E8E2D7",
+
+            "surface-container-highest": "#DDD5C7",
+
+            "on-surface": "#1C1917",
+
+            "on-surface-variant": "#57534E",
+
+            "outline": "#A8A29E",
+
+            "outline-variant": "#E7E5E4",
+
+            "primary": "#E15A3E",
+
+            "primary-container": "#EA580C",
+
+            "primary-fixed": "#FFEDD5",
+
+            "on-primary-fixed": "#7C2D12",
+
+            "on-primary": "#FFFFFF",
+
+            "secondary": "#2D3748",
+
+            "tertiary": "#78716C",
+
+            "sage": "#10B981",
+
+            "sage-container": "#ECFDF5",
+
+            "sage-dark": "#047857",
+
+            "warm-amber": "#F59E0B"
+
+          },
+
+          borderRadius: {
+
+            DEFAULT: "0.375rem",
+
+            "lg": "0.75rem",
+
+            "xl": "1rem",
+
+            "2xl": "1.25rem",
+
+            "3xl": "1.75rem",
+
+            "full": "9999px"
+
+          },
+
+          fontFamily: {
+
+            "sans": ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+
+            "serif": ["Newsreader", "Georgia", "serif"],
+
+            "mono": ["JetBrains Mono", "monospace"]
+
+          }
+
+        }
+
+      }
+
+    };
+
+  </script>
+
+</head>
+
+<body class="bg-surface font-sans text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+
+<!-- Top Announcement Bar -->
+
+<div class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-b border-surface-container">
+
+<div class="w-full bg-[#F5F2EB]/90 border-b border-surface-container/60 px-4 py-2">
+
+<div class="max-w-7xl mx-auto flex items-center justify-between text-xs text-on-surface-variant font-medium">
+
+<div class="flex items-center gap-2 mx-auto">
+
+<span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-sage animate-pulse"></span>
+
+<span>Offline-first focus engine now live on Web, Mac, iOS &amp; Android • Start free in your browser</span>
+
+<span class="hidden md:inline text-tertiary">|</span>
+
+<a class="hidden md:inline text-primary hover:underline font-semibold" href="#interactive-timer">Try the 25-min sprint ↓</a>
+
+</div>
+
+<button aria-label="Dismiss banner" class="text-tertiary hover:text-on-surface transition-colors" type="button">
+
+<span class="material-symbols-outlined text-[16px]">close</span>
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Navigation Header -->
+
+<header class="h-16">
+
+<div class="h-16 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+
+<!-- Logo & Brand -->
+
+<a class="flex items-center gap-3 group" href="#">
+
+<img alt="Pomodot Logo" class="h-9 w-9 rounded-xl object-contain shadow-sm transition-transform group-hover:scale-105" src="https://lh3.googleusercontent.com/aida/AEtjO1X1czjj07RCdakl86HLen582eC8nu7XNa9I7bVEwofS23UgsX4z_TTOP9jZY4JlO0CLnm5BMt7Z-E6MjVgN7t45ekmqcC5hA_4Sb9h7RI6enGs1iY5Y5mLKdZUTQRvg2c9oflAD9Ld4z6TIt1-OybOUbHPPo_hIwEYhqUxueciZF7q9lQsGncrkHZ5XPIHNProW21xj4uZq4pgvsINNk75kw9_LbO9rLek8krnHg07lMYFK21B9MHpgIw"/>
+
+<div class="flex items-center gap-2">
+
+<span class="font-bold text-xl tracking-tight text-on-surface font-sans">Pomodot</span>
+
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[11px] font-medium tracking-wide">Calm Edition</span>
+
+</div>
+
+</a>
+
+<!-- Desktop Navigation -->
+
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium text-on-surface-variant">
+
+<a class="text-on-surface font-semibold hover:text-primary transition-colors" href="#interactive-timer">Free Timer</a>
+
+<a class="hover:text-on-surface transition-colors" href="#benefits">How It Works</a>
+
+<a class="hover:text-on-surface transition-colors" href="#views">4 Calm Views</a>
+
+<a class="hover:text-on-surface transition-colors" href="#use-cases">For Everyone</a>
+
+<a class="hover:text-on-surface transition-colors" href="#craft">Craftsmanship</a>
+
+</nav>
+
+<!-- Right Action Cluster -->
+
+<div class="flex items-center gap-3 sm:gap-4">
+
+<a class="hidden sm:inline-flex items-center text-sm font-medium text-on-surface-variant hover:text-on-surface transition-colors px-3 py-1.5" href="#interactive-timer">
+
+            Sign In
+
+          </a>
+
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-all active:scale-[0.98] text-sm font-semibold shadow-sm shadow-primary/20" href="#interactive-timer">
+
+<span>Start Free</span>
+
+<kbd class="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-white/25 font-mono text-[10px] leading-none text-white">Space</kbd>
+
+</a>
+
+</div>
+
+</div>
+
+</header>
+
+</div>
+
+<!-- Main Container -->
+
+<main class="w-full pt-28 pb-16">
+
+<div class="max-w-7xl mx-auto px-6 lg:px-12 space-y-20">
+
+<!-- HERO SECTION -->
+
+<section class="pt-6 sm:pt-10 pb-8 text-center max-w-4xl mx-auto space-y-6">
+
+<!-- Welcoming Pill -->
+
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container border border-surface-container-high text-xs font-medium text-on-surface-variant">
+
+<span class="w-2 h-2 rounded-full bg-sage"></span>
+
+<span>The calm task manager with a built-in focus rhythm</span>
+
+<span class="text-tertiary">•</span>
+
+<span class="text-primary font-semibold">100% Free to use</span>
+
+</div>
+
+<!-- Main Headline -->
+
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-on-surface tracking-tight leading-[1.15]">
+
+          Do your best work,<br class="hidden sm:inline"/>
+
+<span class="font-serif italic font-normal text-primary">one calm sprint</span> at a time.
+
+        </h1>
+
+<!-- Warm Subheadline -->
+
+<p class="text-lg sm:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed font-normal">
+
+          Pomodot combines an intuitive to-do list, visual boards, and a tactile Pomodoro timer that never loses your place — even when you are completely offline on planes, trains, or deep in flow.
+
+        </p>
+
+<!-- Universal CTAs -->
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-primary text-on-primary font-semibold text-base shadow-lg shadow-primary/20 hover:bg-primary-container transition-all active:scale-[0.98]" href="#interactive-timer">
+
+<span class="material-symbols-outlined text-[22px]">play_circle</span>
+
+<span>Start Focusing for Free</span>
+
+<span class="text-xs font-normal text-white/80">(No signup required)</span>
+
+</a>
+
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-surface-container-lowest border border-surface-container-high text-on-surface hover:bg-surface-container font-medium text-base transition-all shadow-sm" href="#download">
+
+<span class="material-symbols-outlined text-[20px] text-tertiary">devices</span>
+
+<span>Download for Mac, iOS &amp; Android</span>
+
+</a>
+
+</div>
+
+<!-- Reassuring Microcopy Badges -->
+
+<div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-xs sm:text-sm text-tertiary font-medium">
+
+<span class="flex items-center gap-1.5">
+
+<span class="material-symbols-outlined text-sage text-[18px]">verified</span>
+
+<span>Free forever for individuals</span>
+
+</span>
+
+<span class="flex items-center gap-1.5">
+
+<span class="material-symbols-outlined text-sage text-[18px]">cloud_off</span>
+
+<span>Works 100% offline</span>
+
+</span>
+
+<span class="flex items-center gap-1.5">
+
+<span class="material-symbols-outlined text-sage text-[18px]">sync</span>
+
+<span>Instant cross-device sync</span>
+
+</span>
+
+</div>
+
+</section>
+
+<!-- INTERACTIVE COCKPIT / FREE WEB POMODORO -->
+
+<section class="scroll-mt-24" id="interactive-timer">
+
+<div class="relative bg-surface-container-lowest rounded-3xl border border-surface-container-high/80 tactile-shadow p-6 sm:p-10 lg:p-12 overflow-hidden">
+
+<!-- Subtle warm background gradients -->
+
+<div class="absolute -top-32 -right-32 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+
+<div class="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-sage/5 blur-3xl pointer-events-none"></div>
+
+<!-- Top Mode Selector & Ambient Audio Pill -->
+
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-surface-container">
+
+<!-- Mode Pills -->
+
+<div class="inline-flex p-1 bg-surface-container-low rounded-2xl border border-surface-container self-start" id="mode-selector">
+
+<button class="mode-tab px-5 py-2 rounded-xl bg-surface-container-lowest text-on-surface font-semibold text-sm shadow-sm transition-all flex items-center gap-2" data-duration="1500" data-mode="focus" type="button">
+
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+
+<span>Focus (25m)</span>
+
+</button>
+
+<button class="mode-tab px-5 py-2 rounded-xl text-on-surface-variant hover:text-on-surface text-sm font-medium transition-all flex items-center gap-2" data-duration="300" data-mode="short-break" type="button">
+
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+
+<span>Short Break (5m)</span>
+
+</button>
+
+<button class="mode-tab px-5 py-2 rounded-xl text-on-surface-variant hover:text-on-surface text-sm font-medium transition-all flex items-center gap-2" data-duration="900" data-mode="long-break" type="button">
+
+<span class="w-2 h-2 rounded-full bg-surface-container-highest"></span>
+
+<span>Long Break (15m)</span>
+
+</button>
+
+</div>
+
+<!-- Right Controls: Ambient sound & Offline status -->
+
+<div class="flex items-center gap-3">
+
+<!-- Sound Toggle -->
+
+<button class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-surface-container-low border border-surface-container text-xs font-medium text-on-surface hover:bg-surface-container transition-colors" id="sound-toggle" title="Toggle audio chime" type="button">
+
+<span class="material-symbols-outlined text-[18px] text-primary" id="sound-icon">volume_up</span>
+
+<span id="sound-label">Quiet Library Ambient</span>
+
+</button>
+
+<!-- Local sync status badge -->
+
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sage-container text-sage-dark text-xs font-medium">
+
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+
+<span>Ready to Focus</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Main Interactive Body -->
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center py-6 sm:py-8">
+
+<!-- Left: Beautiful Circular Dial -->
+
+<div class="lg:col-span-6 flex flex-col items-center justify-center">
+
+<div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+
+<!-- SVG Progress Dial -->
+
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+
+<circle class="stroke-surface-container-high" cx="50" cy="50" fill="none" r="42" stroke-width="4"></circle>
+
+<circle class="stroke-primary transition-all duration-1000 ease-linear" cx="50" cy="50" fill="none" id="timer-ring" r="42" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round" stroke-width="4.5"></circle>
+
+</svg>
+
+<!-- Center Digital Numbers -->
+
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+
+<div class="font-sans font-bold text-6xl sm:text-7xl text-on-surface tracking-tight tabular-nums select-none" id="timer-display">
+
+                    25:00
+
+                  </div>
+
+<span class="mt-2 text-xs font-semibold uppercase tracking-wider text-primary" id="session-status-label">
+
+                    Deep Focus Sprint
+
+                  </span>
+
+</div>
+
+</div>
+
+<!-- Friendly Session Counter Pill -->
+
+<div class="mt-6 flex flex-col items-center gap-2 text-center">
+
+<div class="flex items-center gap-2">
+
+<span class="w-3 h-3 rounded-full bg-primary" title="Session 1 completed"></span>
+
+<span class="w-3 h-3 rounded-full bg-primary ring-2 ring-primary ring-offset-2 ring-offset-white" title="Current session"></span>
+
+<span class="w-3 h-3 rounded-full bg-surface-container-high" title="Session 3"></span>
+
+<span class="w-3 h-3 rounded-full bg-surface-container-high" title="Session 4"></span>
+
+</div>
+
+<p class="text-xs sm:text-sm text-on-surface-variant font-medium">
+
+                  Session <span class="font-semibold text-on-surface" id="current-cycle-num">2</span> of 4 • Next up: 5 min coffee break ☕
+
+                </p>
+
+</div>
+
+</div>
+
+<!-- Right: Task Linkage & Action Controls -->
+
+<div class="lg:col-span-6 space-y-6">
+
+<!-- Task Card (Friendly Real-life Example) -->
+
+<div class="bg-surface-container-low/70 border border-surface-container rounded-2xl p-5 sm:p-6 space-y-3">
+
+<div class="flex items-center justify-between">
+
+<span class="text-xs uppercase font-bold tracking-wider text-tertiary">Active Task Objective</span>
+
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-semibold">
+
+                    #Writing
+
+                  </span>
+
+</div>
+
+<div class="flex items-start gap-3">
+
+<span class="material-symbols-outlined text-primary text-[22px] mt-0.5">check_circle_outline</span>
+
+<div class="w-full">
+
+<input class="w-full bg-transparent border-0 p-0 text-lg sm:text-xl font-bold text-on-surface focus:ring-0 focus:outline-none placeholder-tertiary" id="active-task-input" type="text" value="Draft product launch announcement &amp; newsletter"/>
+
+<p class="text-xs text-on-surface-variant mt-1">Click to edit with your own focus task anytime</p>
+
+</div>
+
+</div>
+
+<div class="pt-3 border-t border-surface-container flex items-center justify-between text-xs text-on-surface-variant font-medium">
+
+<span class="flex items-center gap-1.5">
+
+<span class="material-symbols-outlined text-[16px] text-sage">checklist</span>
+
+<span>Subtasks: <strong>2 of 4 complete</strong></span>
+
+</span>
+
+<span>Est: <strong>2 Pomodoros (50m)</strong></span>
+
+</div>
+
+</div>
+
+<!-- Main Tactile Action Controls -->
+
+<div class="space-y-3">
+
+<div class="flex items-center gap-3">
+
+<button class="flex-1 py-4 px-6 rounded-2xl bg-primary text-on-primary font-bold text-lg flex items-center justify-center gap-2.5 shadow-lg shadow-primary/25 hover:bg-primary-container hover:shadow-xl transition-all active:scale-[0.98]" id="toggle-timer-btn" type="button">
+
+<span class="material-symbols-outlined text-[24px]" id="play-icon">play_arrow</span>
+
+<span id="play-text">Start Focus</span>
+
+<kbd class="ml-1 px-2 py-0.5 rounded bg-white/20 font-mono text-xs font-normal text-white">Space</kbd>
+
+</button>
+
+<button class="p-4 rounded-2xl bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors border border-surface-container" id="reset-timer-btn" title="Reset Current Sprint" type="button">
+
+<span class="material-symbols-outlined text-[24px]">restart_alt</span>
+
+</button>
+
+<button class="p-4 rounded-2xl bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors border border-surface-container" id="skip-timer-btn" title="Skip to Next Break" type="button">
+
+<span class="material-symbols-outlined text-[24px]">skip_next</span>
+
+</button>
+
+</div>
+
+<!-- Reassuring tip line -->
+
+<div class="flex items-center justify-between text-xs text-tertiary px-1 font-medium">
+
+<span>Press <kbd class="px-1.5 py-0.5 rounded bg-surface-container border border-surface-container-high text-on-surface font-mono">Space</kbd> to play/pause</span>
+
+<span class="text-sage font-semibold">✓ No signup needed to start</span>
+
+</div>
+
+</div>
+
+<!-- Streak & Daily Momentum Widget -->
+
+<div class="p-4 rounded-2xl bg-surface-container/60 border border-surface-container flex items-center justify-between">
+
+<div class="flex items-center gap-3">
+
+<div class="w-9 h-9 rounded-xl bg-warm-amber/15 text-warm-amber flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+
+</div>
+
+<div>
+
+<p class="text-xs font-semibold text-on-surface">Daily Streak: 4 Days in Flow</p>
+
+<p class="text-[11px] text-on-surface-variant">Today: 3 focused sprints (75 min total)</p>
+
+</div>
+
+</div>
+
+<span class="text-xs font-semibold text-primary">View Insights →</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Helpful Reassuring Footer Banner -->
+
+<div class="mt-6 -mx-6 -mb-6 sm:-mx-10 sm:-mb-10 lg:-mx-12 lg:-mb-12 px-6 sm:px-10 lg:px-12 py-3.5 bg-surface-container-low border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-on-surface-variant">
+
+<div class="flex items-center gap-2">
+
+<span class="material-symbols-outlined text-sage text-[18px]">verified_user</span>
+
+<span><strong>Your progress is saved privately in your browser.</strong> Close the tab anytime without losing your count.</span>
+
+</div>
+
+<a class="text-primary hover:underline font-semibold flex items-center gap-1" href="#views">
+
+<span>Explore Kanban &amp; To-Do views</span>
+
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TRANSLATING TECH INTO HUMAN BENEFITS -->
+
+<section class="space-y-10 scroll-mt-24" id="benefits">
+
+<div class="text-center max-w-2xl mx-auto space-y-3">
+
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Built For Real Life</span>
+
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+
+            Technology designed to get out of your way.
+
+          </h2>
+
+<p class="text-base text-on-surface-variant leading-relaxed">
+
+            Most productivity apps freeze when you disconnect or demand constant logins. Pomodot was engineered with calm reliability at its core.
+
+          </p>
+
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+
+<!-- Benefit 1: Offline Freedom -->
+
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow tactile-card-hover flex flex-col justify-between space-y-6">
+
+<div class="space-y-4">
+
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed text-primary flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[28px]">flight_takeoff</span>
+
+</div>
+
+<h3 class="text-xl font-bold text-on-surface">True Offline Freedom</h3>
+
+<p class="text-sm text-on-surface-variant leading-relaxed">
+
+                Write tasks, check off to-dos, and run focus sprints anywhere. Whether you are at 35,000 feet on an airplane, riding the subway, or in a basement coffee shop with spotty Wi-Fi, Pomodot never freezes or displays an error screen.
+
+              </p>
+
+</div>
+
+<div class="pt-4 border-t border-surface-container">
+
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">
+
+<span class="material-symbols-outlined text-[16px] text-sage">database</span>
+
+<span>Built on instant local databases (SQLite &amp; IndexedDB)</span>
+
+</span>
+
+</div>
+
+</div>
+
+<!-- Benefit 2: Magic Cross-Device Sync -->
+
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow tactile-card-hover flex flex-col justify-between space-y-6">
+
+<div class="space-y-4">
+
+<div class="w-12 h-12 rounded-2xl bg-sage-container text-sage flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[28px]">devices_wearables</span>
+
+</div>
+
+<h3 class="text-xl font-bold text-on-surface">Magic Cross-Device Sync</h3>
+
+<p class="text-sm text-on-surface-variant leading-relaxed">
+
+                Start a 25-minute timer on your laptop; glance at your lock screen on your phone to see 18 minutes remaining. Pause on your watch, resume on your tablet. It simply works without friction, battery drain, or missed notifications.
+
+              </p>
+
+</div>
+
+<div class="pt-4 border-t border-surface-container">
+
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">
+
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+
+<span>Smart timestamp reconciliation (Zero battery drain)</span>
+
+</span>
+
+</div>
+
+</div>
+
+<!-- Benefit 3: Zero Friction Inbox to Done -->
+
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow tactile-card-hover flex flex-col justify-between space-y-6">
+
+<div class="space-y-4">
+
+<div class="w-12 h-12 rounded-2xl bg-surface-container text-on-surface flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[28px]">inbox</span>
+
+</div>
+
+<h3 class="text-xl font-bold text-on-surface">Zero Friction Inbox to Done</h3>
+
+<p class="text-sm text-on-surface-variant leading-relaxed">
+
+                Jot down sudden thoughts in 2 seconds flat with quick capture. Organize them when you are ready into Kanban boards, clean checklists, or Today’s schedule with due dates, color tags, and subtasks.
+
+              </p>
+
+</div>
+
+<div class="pt-4 border-t border-surface-container">
+
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-xs font-medium text-on-surface-variant">
+
+<span class="material-symbols-outlined text-[16px] text-secondary">checklist_rtl</span>
+
+<span>Subtasks, Priority tags &amp; 30-Day Trash protection</span>
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- 4 VIEWS FEATURE SHOWCASE -->
+
+<section class="space-y-10 scroll-mt-24" id="views">
+
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+
+<div class="max-w-xl space-y-2">
+
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Flexible Workflows</span>
+
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+
+              The 4 Views You Actually Need.
+
+            </h2>
+
+<p class="text-base text-on-surface-variant">
+
+              Every person thinks differently. Switch effortlessly between clean lists, visual project boards, daily sprints, and calendars.
+
+            </p>
+
+</div>
+
+<!-- Interactive View Switcher Tabs -->
+
+<div class="inline-flex p-1 bg-surface-container rounded-2xl border border-surface-container-high self-start md:self-auto text-xs sm:text-sm font-medium">
+
+<button class="px-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface font-semibold shadow-sm" type="button">Kanban Board</button>
+
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors" type="button">Clean List</button>
+
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors" type="button">Today Focus</button>
+
+<button class="px-4 py-2 rounded-xl text-on-surface-variant hover:text-on-surface transition-colors" type="button">Calendar Schedule</button>
+
+</div>
+
+</div>
+
+<!-- Visual Board Preview Cards -->
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+<!-- Column 1: Today's Priorities -->
+
+<div class="bg-surface-container-low rounded-3xl p-5 space-y-4 border border-surface-container">
+
+<div class="flex items-center justify-between">
+
+<div class="flex items-center gap-2">
+
+<span class="font-bold text-sm text-on-surface">To Do Today</span>
+
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-xs font-semibold text-on-surface-variant">3</span>
+
+</div>
+
+<button class="p-1 hover:bg-surface-container rounded-lg text-tertiary" title="Add item" type="button">
+
+<span class="material-symbols-outlined text-[18px]">add</span>
+
+</button>
+
+</div>
+
+<div class="space-y-3">
+
+<!-- Task 1 -->
+
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-2 hover:border-primary/40 transition-colors cursor-pointer">
+
+<div class="flex items-start justify-between">
+
+<span class="px-2 py-0.5 rounded-md bg-primary-fixed text-on-primary-fixed text-[11px] font-semibold">#Writing</span>
+
+<span class="text-xs text-tertiary font-medium">🍅 2 sprints</span>
+
+</div>
+
+<h4 class="font-semibold text-sm text-on-surface">Draft product launch announcement</h4>
+
+<div class="flex items-center justify-between text-xs text-on-surface-variant pt-1">
+
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">checklist</span> 2/4 subtasks</span>
+
+<span class="text-tertiary">Due 3:00 PM</span>
+
+</div>
+
+</div>
+
+<!-- Task 2 -->
+
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-2 hover:border-primary/40 transition-colors cursor-pointer">
+
+<div class="flex items-start justify-between">
+
+<span class="px-2 py-0.5 rounded-md bg-sage-container text-sage-dark text-[11px] font-semibold">#Research</span>
+
+<span class="text-xs text-warm-amber font-bold">Important</span>
+
+</div>
+
+<h4 class="font-semibold text-sm text-on-surface">Review interview notes with 5 users</h4>
+
+<div class="flex items-center justify-between text-xs text-on-surface-variant pt-1">
+
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">description</span> 3 attachments</span>
+
+<span class="text-tertiary">Today</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Column 2: In Flow / Active -->
+
+<div class="bg-surface-container-low rounded-3xl p-5 space-y-4 border-2 border-primary/20">
+
+<div class="flex items-center justify-between">
+
+<div class="flex items-center gap-2">
+
+<span class="font-bold text-sm text-on-surface">In Flow Right Now</span>
+
+<span class="px-2 py-0.5 rounded-full bg-primary text-on-primary text-xs font-semibold">1</span>
+
+</div>
+
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+
+</div>
+
+<!-- Active Card with timer link -->
+
+<div class="p-5 bg-surface-container-lowest rounded-2xl border-l-4 border-primary tactile-shadow space-y-3">
+
+<div class="flex items-center justify-between">
+
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-[11px] font-bold">
+
+                  Active Sprint (18m left)
+
+                </span>
+
+<span class="text-xs font-semibold text-primary">Sprint 2/4</span>
+
+</div>
+
+<h4 class="font-bold text-base text-on-surface">Synthesize user feedback into presentation deck</h4>
+
+<!-- Progress bar -->
+
+<div class="space-y-1">
+
+<div class="flex justify-between text-[11px] text-tertiary font-medium">
+
+<span>Slides drafted</span>
+
+<span>75% complete</span>
+
+</div>
+
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden">
+
+<div class="bg-primary h-2 rounded-full w-3/4"></div>
+
+</div>
+
+</div>
+
+<div class="pt-1 flex items-center justify-between text-xs text-sage font-medium">
+
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">cloud_done</span> Synced to iPhone &amp; Watch</span>
+
+<span class="text-tertiary">#Strategy</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Column 3: Completed / Wins -->
+
+<div class="bg-surface-container-low rounded-3xl p-5 space-y-4 border border-surface-container">
+
+<div class="flex items-center justify-between">
+
+<div class="flex items-center gap-2">
+
+<span class="font-bold text-sm text-on-surface">Accomplished</span>
+
+<span class="px-2 py-0.5 rounded-full bg-sage-container text-sage-dark text-xs font-semibold">4</span>
+
+</div>
+
+<span class="material-symbols-outlined text-sage text-[20px]">check_circle</span>
+
+</div>
+
+<div class="space-y-3">
+
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-1 opacity-80">
+
+<div class="flex items-center justify-between">
+
+<span class="line-through text-on-surface text-sm font-medium">Finalize quarterly budgeting spreadsheet</span>
+
+<span class="material-symbols-outlined text-sage text-[18px]">task_alt</span>
+
+</div>
+
+<p class="text-xs text-tertiary">Finished in 2 calm sprints (50 min)</p>
+
+</div>
+
+<div class="p-4 bg-surface-container-lowest rounded-2xl border border-surface-container-high/50 tactile-shadow space-y-1 opacity-80">
+
+<div class="flex items-center justify-between">
+
+<span class="line-through text-on-surface text-sm font-medium">Send weekly team digest email</span>
+
+<span class="material-symbols-outlined text-sage text-[18px]">task_alt</span>
+
+</div>
+
+<p class="text-xs text-tertiary">Finished in 1 sprint (25 min)</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- UNIVERSAL USE CASES: WHO POMODOT IS FOR -->
+
+<section class="space-y-10 scroll-mt-24" id="use-cases">
+
+<div class="text-center max-w-2xl mx-auto space-y-3">
+
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Made For Real People</span>
+
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+
+            Loved by anyone with meaningful work to do.
+
+          </h2>
+
+<p class="text-base text-on-surface-variant">
+
+            Whether you’re writing a master’s thesis, shipping a new product, or planning your creative week.
+
+          </p>
+
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+
+<!-- Use Case 1: Students & Researchers -->
+
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow space-y-5">
+
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed text-primary flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[28px]">school</span>
+
+</div>
+
+<div>
+
+<h3 class="text-xl font-bold text-on-surface">For Students &amp; Researchers</h3>
+
+<p class="text-xs font-semibold text-primary mt-1">Study blocks • Reading lists • Thesis chapters</p>
+
+</div>
+
+<p class="text-sm text-on-surface-variant leading-relaxed">
+
+              Tackle dense reading materials and exam prep without burning out. Break multi-week research into calm, chewable 25-minute sprints with zero exam anxiety.
+
+            </p>
+
+<div class="bg-surface-container-low rounded-xl p-3 text-xs space-y-1 border border-surface-container">
+
+<div class="font-semibold text-on-surface">Example Task Block:</div>
+
+<div class="text-on-surface-variant">"Finish Chapter 4 Literature Review notes" (3 Pomodoros)</div>
+
+</div>
+
+</div>
+
+<!-- Use Case 2: Writers & Creators -->
+
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow space-y-5">
+
+<div class="w-12 h-12 rounded-2xl bg-warm-amber/15 text-warm-amber flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[28px]">edit_note</span>
+
+</div>
+
+<div>
+
+<h3 class="text-xl font-bold text-on-surface">For Writers &amp; Creators</h3>
+
+<p class="text-xs font-semibold text-warm-amber mt-1">Deep writing hours • Editing sprints • Content</p>
+
+</div>
+
+<p class="text-sm text-on-surface-variant leading-relaxed">
+
+              Protect your creative sacred hours. Silence notifications, switch on the gentle rain audio chime, and let the words flow one uninterrupted interval at a time.
+
+            </p>
+
+<div class="bg-surface-container-low rounded-xl p-3 text-xs space-y-1 border border-surface-container">
+
+<div class="font-semibold text-on-surface">Example Task Block:</div>
+
+<div class="text-on-surface-variant">"Draft 1,200 words of Newsletter #42" (2 Pomodoros)</div>
+
+</div>
+
+</div>
+
+<!-- Use Case 3: Busy Professionals & Founders -->
+
+<div class="bg-surface-container-lowest rounded-3xl p-8 border border-surface-container-high/70 tactile-shadow space-y-5">
+
+<div class="w-12 h-12 rounded-2xl bg-sage-container text-sage flex items-center justify-center">
+
+<span class="material-symbols-outlined text-[28px]">work</span>
+
+</div>
+
+<div>
+
+<h3 class="text-xl font-bold text-on-surface">For Professionals &amp; Teams</h3>
+
+<p class="text-xs font-semibold text-sage mt-1">Meeting prep • Client deliverables • Inbox zero</p>
+
+</div>
+
+<p class="text-sm text-on-surface-variant leading-relaxed">
+
+              Carve out high-leverage focus between calendar meetings. Organize complex deliverables into subtasks and conquer high-priority tasks before noon.
+
+            </p>
+
+<div class="bg-surface-container-low rounded-xl p-3 text-xs space-y-1 border border-surface-container">
+
+<div class="font-semibold text-on-surface">Example Task Block:</div>
+
+<div class="text-on-surface-variant">"Quarterly OKR alignment &amp; budget deck" (4 Pomodoros)</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- THOUGHTFUL DETAILS & CRAFTSMANSHIP -->
+
+<section class="space-y-10 scroll-mt-24" id="craft">
+
+<div class="text-center max-w-2xl mx-auto space-y-3">
+
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Craftsmanship In Every Pixel</span>
+
+<h2 class="text-3xl sm:text-4xl font-extrabold text-on-surface tracking-tight">
+
+            Thoughtful details you’ll appreciate every single day.
+
+          </h2>
+
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+<!-- Detail 1 -->
+
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+
+<span class="material-symbols-outlined text-[22px]">delete_history</span>
+
+</div>
+
+<h4 class="font-bold text-base text-on-surface">30-Day Trash Recovery</h4>
+
+<p class="text-xs text-on-surface-variant leading-relaxed">
+
+              Accidentally deleted a task or subtask? Easily restore it anytime within 30 days. Your hard work is always protected.
+
+            </p>
+
+</div>
+
+<!-- Detail 2 -->
+
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-sage">
+
+<span class="material-symbols-outlined text-[22px]">notifications_active</span>
+
+</div>
+
+<h4 class="font-bold text-base text-on-surface">Gentle Chime Library</h4>
+
+<p class="text-xs text-on-surface-variant leading-relaxed">
+
+              No jarring, screeching alarms. Calm acoustic singing bowls, wooden blocks, and Japanese temple bells gently mark your breaks.
+
+            </p>
+
+</div>
+
+<!-- Detail 3 -->
+
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-warm-amber">
+
+<span class="material-symbols-outlined text-[22px]">tune</span>
+
+</div>
+
+<h4 class="font-bold text-base text-on-surface">Customizable Rhythms</h4>
+
+<p class="text-xs text-on-surface-variant leading-relaxed">
+
+              Prefer 50-minute deep work blocks or 90-minute ultradian cycles? Set your exact focus, short break, and long break intervals in seconds.
+
+            </p>
+
+</div>
+
+<!-- Detail 4 -->
+
+<div class="bg-surface-container-lowest rounded-2xl p-6 border border-surface-container space-y-3">
+
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-secondary">
+
+<span class="material-symbols-outlined text-[22px]">keyboard</span>
+
+</div>
+
+<h4 class="font-bold text-base text-on-surface">Intuitive Keyboard Control</h4>
+
+<p class="text-xs text-on-surface-variant leading-relaxed">
+
+              Press Space to toggle, 'Q' to quick-capture a new idea, and ⌘K for command search. Never leave your keyboard when in flow.
+
+            </p>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- KEYBOARD SHORTCUTS CHEATSHEET -->
+
+<section class="bg-surface-container-low rounded-3xl p-8 sm:p-10 border border-surface-container flex flex-col lg:flex-row items-center justify-between gap-8">
+
+<div class="max-w-md space-y-2">
+
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-xs font-semibold text-tertiary">
+
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+
+<span>Speed &amp; Ergonomics</span>
+
+</div>
+
+<h3 class="text-2xl font-bold text-on-surface">Fingers never have to leave the keys.</h3>
+
+<p class="text-sm text-on-surface-variant">
+
+            Effortlessly control your focus timer and manage tasks at the speed of thought.
+
+          </p>
+
+</div>
+
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full lg:w-auto">
+
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+
+<span class="text-xs text-tertiary font-medium">Start / Pause</span>
+
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">Space</kbd>
+
+</div>
+
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+
+<span class="text-xs text-tertiary font-medium">Quick Capture</span>
+
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">Q</kbd>
+
+</div>
+
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+
+<span class="text-xs text-tertiary font-medium">Command Palette</span>
+
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">⌘ K</kbd>
+
+</div>
+
+<div class="p-3.5 bg-surface-container-lowest rounded-xl border border-surface-container flex flex-col justify-between gap-2">
+
+<span class="text-xs text-tertiary font-medium">Skip to Break</span>
+
+<kbd class="px-2 py-1 rounded bg-surface-container font-mono text-xs font-bold text-on-surface w-fit">⌘ →</kbd>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- INVITING CLOSING HERO / CTA BANNER -->
+
+<section class="pt-6" id="download">
+
+<div class="bg-primary text-on-primary rounded-3xl p-8 sm:p-12 lg:p-16 text-center space-y-8 relative overflow-hidden shadow-2xl shadow-primary/20">
+
+<!-- Subtle decorative radial rings -->
+
+<div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
+
+<div class="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-black/10 blur-2xl pointer-events-none"></div>
+
+<div class="space-y-3 max-w-2xl mx-auto relative z-10">
+
+<span class="text-xs font-bold uppercase tracking-widest text-white/80">Uninterrupted Momentum</span>
+
+<h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+
+              Reclaim your focus today.
+
+            </h2>
+
+<p class="text-base sm:text-lg text-white/90 leading-relaxed font-normal">
+
+              No credit card required. Free forever for individuals. Start right now in your browser, or install the native app on your favorite devices.
+
+            </p>
+
+</div>
+
+<div class="flex flex-wrap items-center justify-center gap-4 relative z-10">
+
+<a class="px-8 py-4 rounded-2xl bg-white text-primary font-bold text-base shadow-lg hover:bg-surface-container transition-all active:scale-[0.98]" href="#interactive-timer">
+
+              Launch Free In-Browser Timer
+
+            </a>
+
+<a class="px-8 py-4 rounded-2xl bg-white/15 text-white hover:bg-white/25 font-semibold text-base backdrop-blur-sm transition-all" href="#">
+
+              Download Native App
+
+            </a>
+
+</div>
+
+<div class="flex flex-wrap items-center justify-center gap-6 text-xs text-white/75 font-medium relative z-10 pt-2">
+
+<span>macOS 12+ (Apple Silicon &amp; Intel)</span>
+
+<span>•</span>
+
+<span>iOS 17+ Live Activities</span>
+
+<span>•</span>
+
+<span>Android 14+</span>
+
+<span>•</span>
+
+<span>Zero Tracking or Surveillance</span>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+<!-- REFINED FOOTER -->
+
+<footer class="w-full bg-surface-container-lowest border-t border-surface-container mt-16">
+
+<div class="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+
+<!-- Brand Summary -->
+
+<div class="lg:col-span-2 space-y-4">
+
+<div class="flex items-center gap-3">
+
+<img alt="Pomodot Logo" class="h-8 w-8 rounded-xl object-contain shadow-sm" src="https://lh3.googleusercontent.com/aida/AEtjO1X1czjj07RCdakl86HLen582eC8nu7XNa9I7bVEwofS23UgsX4z_TTOP9jZY4JlO0CLnm5BMt7Z-E6MjVgN7t45ekmqcC5hA_4Sb9h7RI6enGs1iY5Y5mLKdZUTQRvg2c9oflAD9Ld4z6TIt1-OybOUbHPPo_hIwEYhqUxueciZF7q9lQsGncrkHZ5XPIHNProW21xj4uZq4pgvsINNk75kw9_LbO9rLek8krnHg07lMYFK21B9MHpgIw"/>
+
+<span class="font-bold text-xl text-on-surface font-sans">Pomodot</span>
+
+</div>
+
+<p class="text-sm text-on-surface-variant max-w-sm leading-relaxed">
+
+            The calm task manager with a built-in focus rhythm. Designed for writers, researchers, students, founders, and anyone who wants to do deep, meaningful work without burnout.
+
+          </p>
+
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage-container text-sage-dark text-xs font-semibold">
+
+<span class="w-2 h-2 rounded-full bg-sage animate-pulse"></span>
+
+<span>100% Offline-Capable • Zero Surveillance</span>
+
+</div>
+
+</div>
+
+<!-- Links Column 1: Platform -->
+
+<div class="space-y-3">
+
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Platform</span>
+
+<ul class="space-y-2 text-sm text-on-surface-variant">
+
+<li><a class="hover:text-primary transition-colors" href="#interactive-timer">Web App (PWA)</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">macOS App</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">iOS &amp; iPadOS</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">Android &amp; Tablet</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">Chrome Extension</a></li>
+
+</ul>
+
+</div>
+
+<!-- Links Column 2: Architecture & Philosophy -->
+
+<div class="space-y-3">
+
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Philosophy</span>
+
+<ul class="space-y-2 text-sm text-on-surface-variant">
+
+<li><a class="hover:text-primary transition-colors" href="#">Local-First Privacy</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">The 25-Min Rhythm</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">Privacy Manifesto</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">Data Export (JSON/CSV)</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">Open Standards</a></li>
+
+</ul>
+
+</div>
+
+<!-- Links Column 3: Views -->
+
+<div class="space-y-3">
+
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Calm Views</span>
+
+<ul class="space-y-2 text-sm text-on-surface-variant">
+
+<li><a class="hover:text-primary transition-colors" href="#views">Visual Kanban</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#views">Clean List View</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#views">Today Focus</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#views">Calendar Schedule</a></li>
+
+<li><a class="hover:text-primary transition-colors" href="#">Sound Lab</a></li>
+
+</ul>
+
+</div>
+
+<!-- Links Column 4: Quick Shortcuts -->
+
+<div class="space-y-3">
+
+<span class="text-xs uppercase font-bold tracking-wider text-on-surface">Shortcuts</span>
+
+<div class="space-y-2 text-xs text-on-surface-variant font-mono">
+
+<div class="flex items-center justify-between">
+
+<span>Start/Pause</span>
+
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">Space</kbd>
+
+</div>
+
+<div class="flex items-center justify-between">
+
+<span>Quick Task</span>
+
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">Q</kbd>
+
+</div>
+
+<div class="flex items-center justify-between">
+
+<span>Palette</span>
+
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">⌘K</kbd>
+
+</div>
+
+<div class="flex items-center justify-between">
+
+<span>Reset</span>
+
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-semibold">⌥R</kbd>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Copyright Bar -->
+
+<div class="pt-8 border-t border-surface-container flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+
+<div>© 2025 Pomodot. Crafted with calm care for thinkers and builders worldwide.</div>
+
+<div class="flex items-center gap-6">
+
+<a class="hover:text-on-surface transition-colors" href="#">Privacy Policy</a>
+
+<a class="hover:text-on-surface transition-colors" href="#">Terms of Service</a>
+
+<a class="hover:text-on-surface transition-colors" href="#">Security Whitepaper</a>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
+
+<!-- SCRIPT: Interactive Web Pomodoro Engine -->
+
+<script>
+
+    (function () {
+
+      let timerDuration = 1500; // 25 min default
+
+      let timeRemaining = 1500;
+
+      let timerInterval = null;
+
+      let isRunning = false;
+
+      let currentMode = "focus";
+
+      let completedCycles = 1;
+
+      let soundEnabled = true;
+
+
+
+      const display = document.getElementById("timer-display");
+
+      const playBtn = document.getElementById("toggle-timer-btn");
+
+      const playIcon = document.getElementById("play-icon");
+
+      const playText = document.getElementById("play-text");
+
+      const resetBtn = document.getElementById("reset-timer-btn");
+
+      const skipBtn = document.getElementById("skip-timer-btn");
+
+      const ring = document.getElementById("timer-ring");
+
+      const statusLabel = document.getElementById("session-status-label");
+
+      const modeTabs = document.querySelectorAll(".mode-tab");
+
+      const soundToggle = document.getElementById("sound-toggle");
+
+      const soundIcon = document.getElementById("sound-icon");
+
+      const soundLabel = document.getElementById("sound-label");
+
+      const cycleNum = document.getElementById("current-cycle-num");
+
+
+
+      const totalDash = 263.89; // 2 * PI * 42
+
+
+
+      function formatTime(seconds) {
+
+        const mins = Math.floor(seconds / 60);
+
+        const secs = seconds % 60;
+
+        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+      }
+
+
+
+      function updateDisplay() {
+
+        display.textContent = formatTime(timeRemaining);
+
+        const fraction = (timerDuration - timeRemaining) / timerDuration;
+
+        const offset = totalDash - (fraction * totalDash);
+
+        ring.style.strokeDashoffset = offset;
+
+      }
+
+
+
+      function playGentleBell() {
+
+        if (!soundEnabled) return;
+
+        try {
+
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+          const osc = audioCtx.createOscillator();
+
+          const gain = audioCtx.createGain();
+
+          osc.type = "sine";
+
+          // Gentle warm singing chime (A4 + warm overtone)
+
+          osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+
+          osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+
+          gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+
+          osc.connect(gain);
+
+          gain.connect(audioCtx.destination);
+
+          osc.start();
+
+          osc.stop(audioCtx.currentTime + 1.2);
+
+        } catch (e) {
+
+          // Audio fallback gracefully handled
+
+        }
+
+      }
+
+
+
+      function toggleTimer() {
+
+        if (isRunning) {
+
+          pauseTimer();
+
+        } else {
+
+          startTimer();
+
+        }
+
+      }
+
+
+
+      function startTimer() {
+
+        if (isRunning) return;
+
+        isRunning = true;
+
+        playIcon.textContent = "pause";
+
+        playText.textContent = "Pause Session";
+
+
+
+        timerInterval = setInterval(() => {
+
+          if (timeRemaining > 0) {
+
+            timeRemaining--;
+
+            updateDisplay();
+
+          } else {
+
+            clearInterval(timerInterval);
+
+            isRunning = false;
+
+            playIcon.textContent = "play_arrow";
+
+            playText.textContent = "Start Focus";
+
+            playGentleBell();
+
+            handleSessionComplete();
+
+          }
+
+        }, 1000);
+
+      }
+
+
+
+      function pauseTimer() {
+
+        if (!isRunning) return;
+
+        isRunning = false;
+
+        clearInterval(timerInterval);
+
+        playIcon.textContent = "play_arrow";
+
+        playText.textContent = "Resume Focus";
+
+      }
+
+
+
+      function resetTimer() {
+
+        pauseTimer();
+
+        timeRemaining = timerDuration;
+
+        updateDisplay();
+
+        playText.textContent = currentMode === "focus" ? "Start Focus" : "Start Break";
+
+      }
+
+
+
+      function handleSessionComplete() {
+
+        if (currentMode === "focus") {
+
+          completedCycles = (completedCycles % 4) + 1;
+
+          cycleNum.textContent = completedCycles;
+
+          if (completedCycles === 1) {
+
+            switchMode("long-break", 900);
+
+          } else {
+
+            switchMode("short-break", 300);
+
+          }
+
+        } else {
+
+          switchMode("focus", 1500);
+
+        }
+
+      }
+
+
+
+      function switchMode(mode, duration) {
+
+        pauseTimer();
+
+        currentMode = mode;
+
+        timerDuration = duration;
+
+        timeRemaining = duration;
+
+
+
+        modeTabs.forEach(tab => {
+
+          const tabDot = tab.querySelector("span:first-child");
+
+          if (tab.dataset.mode === mode) {
+
+            tab.classList.add("bg-surface-container-lowest", "text-on-surface", "font-semibold", "shadow-sm");
+
+            tab.classList.remove("text-on-surface-variant");
+
+            if (tabDot) {
+
+              tabDot.classList.remove("bg-surface-container-highest");
+
+              tabDot.classList.add(mode === "focus" ? "bg-primary" : "bg-sage");
+
+            }
+
+          } else {
+
+            tab.classList.remove("bg-surface-container-lowest", "text-on-surface", "font-semibold", "shadow-sm");
+
+            tab.classList.add("text-on-surface-variant");
+
+            if (tabDot) {
+
+              tabDot.classList.remove("bg-primary", "bg-sage");
+
+              tabDot.classList.add("bg-surface-container-highest");
+
+            }
+
+          }
+
+        });
+
+
+
+        if (mode === "focus") {
+
+          ring.classList.add("stroke-primary");
+
+          ring.classList.remove("stroke-sage");
+
+          statusLabel.textContent = "Deep Focus Sprint";
+
+          statusLabel.classList.add("text-primary");
+
+          statusLabel.classList.remove("text-sage");
+
+          playText.textContent = "Start Focus";
+
+        } else {
+
+          ring.classList.remove("stroke-primary");
+
+          ring.classList.add("stroke-sage");
+
+          statusLabel.textContent = mode === "short-break" ? "Rest & Hydrate (5m)" : "Extended Rest & Walk (15m)";
+
+          statusLabel.classList.remove("text-primary");
+
+          statusLabel.classList.add("text-sage");
+
+          playText.textContent = "Start Break";
+
+        }
+
+
+
+        updateDisplay();
+
+      }
+
+
+
+      // Mode Tab Bindings
+
+      modeTabs.forEach(tab => {
+
+        tab.addEventListener("click", () => {
+
+          const mode = tab.dataset.mode;
+
+          const dur = parseInt(tab.dataset.duration, 10);
+
+          switchMode(mode, dur);
+
+        });
+
+      });
+
+
+
+      playBtn.addEventListener("click", toggleTimer);
+
+      resetBtn.addEventListener("click", resetTimer);
+
+      skipBtn.addEventListener("click", handleSessionComplete);
+
+
+
+      // Sound Toggle
+
+      soundToggle.addEventListener("click", () => {
+
+        soundEnabled = !soundEnabled;
+
+        soundIcon.textContent = soundEnabled ? "volume_up" : "volume_off";
+
+        soundLabel.textContent = soundEnabled ? "Quiet Library Ambient" : "Sounds Muted";
+
+      });
+
+
+
+      // Keyboard space shortcut listener
+
+      window.addEventListener("keydown", (e) => {
+
+        if (e.code === "Space" && e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+
+          e.preventDefault();
+
+          toggleTimer();
+
+        }
+
+        if (e.altKey && (e.key === "r" || e.key === "R")) {
+
+          e.preventDefault();
+
+          resetTimer();
+
+        }
+
+      });
+
+
+
+      // Initial run
+
+      updateDisplay();
+
+    })();
+
+  </script>
+
+</body></html>
+
