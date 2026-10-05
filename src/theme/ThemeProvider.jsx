@@ -6,7 +6,7 @@ const readPreference = key => { try { return localStorage.getItem(key); } catch 
 const savePreference = (key, value) => { try { localStorage.setItem(key, value); } catch { /* Preferences remain session-only when storage is unavailable. */ } };
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => readPreference('pomodot-theme') === 'dark' ? 'dark' : 'light');
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
   const [palette, setPalette] = useState(() => { const preference = readPreference('pomodot-palette'); return palettes[preference] ? preference : defaultPalette; });
   useEffect(() => { document.documentElement.dataset.theme = theme; savePreference('pomodot-theme', theme); }, [theme]);
   useEffect(() => {

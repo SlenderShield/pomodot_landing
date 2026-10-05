@@ -3,12 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f7f6f2" />
-    <meta name="description" content="Pomodot is the calm, offline-first task manager with a built-in focus rhythm." />
+    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#161b1b" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
     <title>Pomodot — Calm focus, one sprint at a time</title>
+    <meta name="description" content="Pomodot is the calm, offline-first task manager with a built-in focus rhythm. Plan your day, start a focus sprint, and keep your progress private." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pomodot" />
+    <meta property="og:title" content="Pomodot — Calm focus, one sprint at a time" />
+    <meta property="og:description" content="The calm, offline-first task manager with a built-in focus rhythm." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Pomodot — Calm focus, one sprint at a time" />
+    <meta name="twitter:description" content="The calm, offline-first task manager with a built-in focus rhythm." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" />
+    <script>
+      // Apply the saved (or system) theme before first paint to avoid a light/dark flash.
+      (function () {
+        var theme = null;
+        try { theme = localStorage.getItem('pomodot-theme'); } catch (e) {}
+        if (theme !== 'dark' && theme !== 'light') {
+          theme = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Pomodot's landing page needs JavaScript to run the interactive focus timer. Pomodot is a calm, offline-first task manager with a built-in focus rhythm.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
