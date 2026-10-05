@@ -13,9 +13,7 @@ export function ThemeProvider({ children }) {
     const colors = palettes[palette];
     document.documentElement.style.setProperty('--coral', colors.primary);
     document.documentElement.style.setProperty('--coral-dark', colors.primaryHover);
-    document.documentElement.style.setProperty('--primary-soft', colors.primarySoft);
     document.documentElement.style.setProperty('--sage', colors.support);
-    document.documentElement.style.setProperty('--sage-soft', colors.supportSoft);
     savePreference('pomodot-palette', palette);
   }, [palette]);
   const value = useMemo(() => ({ theme, setTheme, palette, setPalette, palettes }), [theme, palette]);

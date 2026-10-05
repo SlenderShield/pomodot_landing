@@ -1,8 +1,35 @@
 import { useId, useState } from 'react';
-
-const viewContent = { Kanban: [['To do today', 'Outline launch brief', 'Review interview notes'], ['In flow', 'Synthesize user feedback', '18 min remaining'], ['Done', 'Send weekly team digest', 'Finished in one sprint']], List: [['Today', 'Outline launch brief', 'Writing · 2 sprints'], ['Next', 'Review interview notes', 'Research · 1 sprint'], ['Later', 'Prepare design review', 'Strategy · 3 sprints']], Focus: [['Now', 'Synthesize user feedback', '18:24 remaining'], ['Up next', 'Outline launch brief', '2 focus sprints'], ['Break', 'Step away and reset', '5 minutes']], Calendar: [['09:00', 'Plan the day', 'Today'], ['10:00', 'Deep work: feedback deck', 'Focus block'], ['13:30', 'Team review', 'Calendar event']] };
+import { views } from '../content/site';
 
 export function Views() {
-  const [active, setActive] = useState('Kanban'); const tabId = useId();
-  return <section className="section views" id="views" aria-labelledby="views-title"><div className="views-heading"><div><p className="eyebrow">Your work, your preferred view</p><h2 id="views-title">See the day<br />the way you <em>think.</em></h2></div><p>Move between structured lists, visual boards, today’s focus, and your schedule—without duplicating a thing.</p></div><div className="view-tabs" role="tablist" aria-label="Product views">{Object.keys(viewContent).map(item => <button id={`${tabId}-${item}`} key={item} className={item === active ? 'active' : ''} onClick={() => setActive(item)} role="tab" aria-selected={item === active} aria-controls={`${tabId}-panel`}>{item}</button>)}</div><div className="board" id={`${tabId}-panel`} role="tabpanel" aria-labelledby={`${tabId}-${active}`} aria-label={`${active} view preview`}>{viewContent[active].map(([heading, task, meta], index) => <article className={index === 1 ? 'board-column featured' : 'board-column'} key={heading}><header><span>{heading}</span><b aria-label={`${index === 1 ? 1 : 2} tasks`}>{index === 1 ? '01' : '02'}</b></header><div className="board-task"><span className={index === 1 ? 'task-pill coral' : 'task-pill'}>{index === 1 ? 'Active focus' : index === 2 ? 'Complete' : 'Priority'}</span><h3>{task}</h3><p>{meta}</p>{index === 1 && <div className="progress" aria-label="68 percent complete"><i /></div>}</div>{index !== 1 && <div className="board-task muted"><h3>{index === 0 ? 'Prepare design review' : 'Finalize budget sheet'}</h3><p>1 focus sprint</p></div>}</article>)}</div></section>;
+  const names = Object.keys(views.tabs);
+  const [active, setActive] = useState(names[0]);
+  const tabId = useId();
+  return (
+    <section className="section views" id="views" aria-labelledby="views-title">
+      <div className="views-heading">
+        <div><p className="eyebrow">{views.eyebrow}</p><h2 id="views-title">{views.title} <em>{views.accent}</em></h2></div>
+        <p>{views.text}</p>
+      </div>
+      <div className="view-tabs" role="tablist" aria-label="Product views">
+        {names.map(item => <button id={`${tabId}-${item}`} key={item} className={item === active ? 'active' : ''} onClick={() => setActive(item)} role="tab" aria-selected={item === active} aria-controls={`${tabId}-panel`}>{item}</button>)}
+      </div>
+      <div className="board" id={`${tabId}-panel`} role="tabpanel" aria-labelledby={`${tabId}-${active}`}>
+        {views.tabs[active].map(column => (
+          <article className={column.active ? 'board-column featured' : 'board-column'} key={column.heading}>
+            <header><span>{column.heading}</span><b>{String(column.tasks.length).padStart(2, '0')}</b></header>
+            {column.tasks.map(([title, meta], index) => (
+              <div className={index === 0 ? 'board-task' : 'board-task muted'} key={title}>
+                {index === 0 && <span className={column.active ? 'task-pill coral' : 'task-pill'}>{column.pill}</span>}
+                <h3>{title}</h3>
+                <p>{meta}</p>
+                {index === 0 && column.progress && <div className="progress" role="img" aria-label={`${column.progress} percent complete`}><i style={{ width: `${column.progress}%` }} /></div>}
+              </div>
+            ))}
+          </article>
+        ))}
+      </div>
+      <p className="views-note">{views.note} <a href="#roadmap">See the roadmap →</a></p>
+    </section>
+  );
 }
