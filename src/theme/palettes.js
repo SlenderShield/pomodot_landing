@@ -1,7 +1,8 @@
+// `primary` carries white button text, so each value keeps ≥4.5:1 contrast against white.
 export const palettes = {
-  coral: { label: 'Coral', primary: '#ae4436', primaryHover: '#8d352a', primarySoft: '#f8e5e0', support: '#3f7860', supportSoft: '#e5eee8' },
-  ocean: { label: 'Ocean', primary: '#176b80', primaryHover: '#11566a', primarySoft: '#dceef1', support: '#386f62', supportSoft: '#e5eee8' },
-  violet: { label: 'Violet', primary: '#655094', primaryHover: '#4d3c76', primarySoft: '#e9e4f6', support: '#3e7665', supportSoft: '#e5eee8' },
+  tomato: { label: 'Tomato', primary: '#c0392b', primaryHover: '#9f2d21', primarySoft: '#fbe3dc', support: '#35684b', supportSoft: '#e3efe6' },
+  ocean: { label: 'Ocean', primary: '#176b80', primaryHover: '#11566a', primarySoft: '#d9edf1', support: '#8a5a2b', supportSoft: '#f3e8da' },
+  violet: { label: 'Violet', primary: '#655094', primaryHover: '#4d3c76', primarySoft: '#e9e4f6', support: '#35684b', supportSoft: '#e3efe6' },
 };
 
-export const defaultPalette = 'coral';
+export const defaultPalette = 'tomato';
